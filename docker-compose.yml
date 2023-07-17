@@ -1,0 +1,33 @@
+version: '3.1'
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./src:/var/www/html
+      - ./conf.d:/etc/nginx/conf.d
+    ports:
+      - 82:82
+    environment:
+      - NGINX_PORT=82
+      - NGINX_HOST=lotolis.local
+  psql:
+    image: postgres:latest
+    volumes:
+      - ./postgres:/etc/postgresql
+    ports:
+      - 3333:3333
+    environment:
+      - POSTGRES_USER=lotolis
+      - POSTGRES_PASSWORD=111
+      - POSTGRES_DB=lotolis  
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    volumes:
+      - ./pgadmin:/var/log/pgadmin
+    ports:
+      - 90:90
+    environment:
+      PGADMIN_DEFAULT_EMAIL: lotolis@mail.ru
+      PGADMIN_DEFAULT_PASSWORD: root
+
